@@ -10,7 +10,7 @@ use app\api\service\Sms;
 class WxNotify extends WxPayNotify{
 
     public function  NotifyProcess($data,&$msg){
-        file_put_contents("a.txt", "zhifu");
+        file_put_contents("a.txt", json_encode($data));
         if($data['result_code'] == "SUCCESS"){
             $orderNo = $data['out_trade_no'];
             Db::startTrans();
