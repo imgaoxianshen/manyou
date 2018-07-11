@@ -26,8 +26,10 @@ class WxNotify extends WxPayNotify{
                 Sms::sendSms($order['get_phone'],12345);
                 return true;
 
-            }catch(Exception $e){
+            }catch(\Exception $e){
                 Db::rollBack();
+                $a = file_get_contents("a.txt");
+                file_put_contents("a.txt", $a.PHP_EOL.json_encode($data));
                 return false;
             }
         }else{
