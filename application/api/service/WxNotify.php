@@ -6,6 +6,7 @@ use wxpay\WxPayNotify;
 use app\api\model\Order as OrderModel;
 use app\lib\enum\OrderStatusEnum;
 use app\api\service\Sms;
+use think\Db;
 
 class WxNotify extends WxPayNotify{
 
