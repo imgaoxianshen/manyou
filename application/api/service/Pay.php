@@ -7,7 +7,7 @@ use app\lib\exception\OrderException;
 use app\lib\exception\TokenException;
 use app\lib\enum\OrderStatusEnum;
 use wxpay\WxPayApi;
-use wxpay\WxPayUnifiedOrder;
+use \wxpay\WxPayUnifiedOrder;
 use wxpay\WxPayJsApiPay;
 use think\Log;
 
