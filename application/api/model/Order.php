@@ -46,10 +46,18 @@ class Order extends BaseModel
         if(empty($user)){
             throw new UnBindPhoneException();
         }
-        return self::with('orderDetail')->where('status','<>',OrderStatusEnum::UNPAIED)
+        $order = self::with('orderDetail')->where('status','<>',OrderStatusEnum::UNPAIED)
         ->where(function($query) use ($user,$uid){
             $query->where('user_id','=',$uid)->whereOr('get_phone','=',$user['mobile']);
         })->where('id','=',$order_id)->find();
+
+        if($order['mobile'] == $user['mobile']){
+            $order['type'] == "send";
+        }else{
+            $order['type'] == "get";           
+        }
+        
+        return $order;
     }
 
     public static function orderGet($uid){
