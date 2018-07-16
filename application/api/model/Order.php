@@ -51,10 +51,10 @@ class Order extends BaseModel
             $query->where('user_id','=',$uid)->whereOr('get_phone','=',$user['mobile']);
         })->where('id','=',$order_id)->find();
 
-        if($order['mobile'] == $user['mobile']){
-            $order['type'] == "send";
+        if($order['get_mobile'] == $user['mobile']){
+            $order['type'] == "get";
         }else{
-            $order['type'] == "get";           
+            $order['type'] == "send";           
         }
         
         return $order;
