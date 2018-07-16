@@ -52,12 +52,12 @@ class Order extends BaseModel
         })->where('id','=',$order_id)->find();
 
         if($order['get_phone'] == $user['mobile']){
-            $type = "get";
+            $order->type = "get";
         }else{
-            $type = "send";           
+            $order->type =  "send";           
         }
         
-        return [$order,$type];
+        return $order;
     }
 
     public static function orderGet($uid){

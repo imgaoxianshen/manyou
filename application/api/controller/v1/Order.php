@@ -41,7 +41,7 @@ class Order extends BaseController
         $uid = TokenService::getCurrentUid();
         $order = new OrderModel();
         $order_detail = $order::getOrderOne($uid,$order_id);
-        return new SuccessMessage(['data'=>array_merge($order_detail[0],$order_detail[1])]);
+        return new SuccessMessage(['data'=>$order_detail]);
     }
 
     //收到的信
