@@ -11,7 +11,6 @@ use think\Db;
 class WxNotify extends WxPayNotify{
 
     public function  NotifyProcess($data,&$msg){
-        file_put_contents("a.txt", json_encode($data));
         if($data['result_code'] == "SUCCESS"){
             $orderNo = $data['out_trade_no'];
             Db::startTrans();
@@ -29,8 +28,6 @@ class WxNotify extends WxPayNotify{
 
             }catch(\Exception $e){
                 Db::rollBack();
-                $a = file_get_contents("a.txt");
-                file_put_contents("a.txt", $a.PHP_EOL.json_encode($data));
                 return false;
             }
         }else{

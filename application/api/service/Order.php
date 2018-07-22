@@ -30,7 +30,7 @@ class Order
             $order->order_no = $orderNo;
             $order->status = 0;
             $order->get_phone = $oMsg['get_phone'];
-            $order->unlock_time = time() + $oMsg['monthAfter']*30*24*60*60;
+            $order->unlock_time = strtotime($oMsg['date']);
             //这里还要算price
             $order->price = 0.01;
             $order->save();

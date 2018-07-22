@@ -20,8 +20,6 @@ class  Pay extends BaseController{
     }
 
     public function receiveNotify(){
-        $res = file_get_contents("a.txt");
-        file_put_contents("a.txt",$res.PHP_EOL."notify_method".date('Y-m-d H:i:s'));
         $notify = new WxNotifySercice();
         $notify->Handle();
     }

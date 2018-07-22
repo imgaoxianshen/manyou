@@ -21,7 +21,7 @@ class Order extends BaseController
         $oMsg['text'] = input('post.text');
         $oMsg['imgs'] = input('post.imgs');
         $oMsg['get_phone'] = input('post.get_phone');
-        $oMsg['monthAfter'] = input('post.monthAfter');
+        $oMsg['date'] = input('post.date');
         // $oMsg['music'] = input('post.music');
         $uid = TokenService::getCurrentUid();
 
