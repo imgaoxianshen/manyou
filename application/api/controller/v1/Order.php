@@ -80,10 +80,20 @@ class Order extends BaseController
         //处理更改状态以及发送sms
         $order::where('id','=',$order_id)->update(['status'=>2]);
         $msg = Sms::sendSms($res,1111);
-        
+        dump($msg);
         if($msg['code']!="OK"){
             throw new SmsException();
         }
         return new SuccessMessage();
+    }
+
+    //定时任务（查找今日解封的信和明天解封的信发送短信）
+    public function unlockMessage(){
+        $order = new Order();
+        $unlockList = $order::unlockList();
+        foreach($unlockList as $o){
+            //发送短信
+            $msg = Sms::sendSms($res,1111);
+        }
     }
 }

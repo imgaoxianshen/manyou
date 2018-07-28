@@ -67,12 +67,12 @@ class Order extends BaseModel
             throw new UnBindPhoneException();
         }
         //这里用phone查询订单列表
-        return self::with('User')->where('status','<>',OrderStatusEnum::UNPAIED)->where('get_phone','=',$user['mobile'])->select(); 
+        return self::with('User')->where('status','<>',OrderStatusEnum::UNPAIED)->where('get_phone','=',$user['mobile'])->order('create_time','desc')->select(); 
     }
 
     //这个人发送的信
     public static function orderSend($uid){
-        return self::where('status','<>',OrderStatusEnum::UNPAIED)->where('user_id','=',$uid)->select();
+        return self::where('status','<>',OrderStatusEnum::UNPAIED)->where('user_id','=',$uid)->order('create_time','desc')->select();
     }
 
     public static function watchOrder($uid,$order_id){
@@ -92,5 +92,11 @@ class Order extends BaseModel
         //返回发件人的mobile
         return $order['user']['mobile'];
 
+    }
+
+    public function unlockList(){
+        //今日0：00的到明天0:00
+        return self::where('status','=',OrderStatusEnum::PAYID)->where('unlock_time','>=',strtotime(date("Y-m-d"),time()))
+        ->where('unlock_time','<',strtotime(date('Y-m-d',time()+24*60*60)))->select();
     }
 }
