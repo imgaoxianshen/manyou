@@ -67,7 +67,7 @@ class Order extends BaseModel
             throw new UnBindPhoneException();
         }
         //这里用phone查询订单列表
-        return self::where('status','<>',OrderStatusEnum::UNPAIED)->where('get_phone','=',$user['mobile'])->select(); 
+        return self::with('User')->where('status','<>',OrderStatusEnum::UNPAIED)->where('get_phone','=',$user['mobile'])->select(); 
     }
 
     //这个人发送的信

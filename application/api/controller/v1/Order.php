@@ -79,8 +79,8 @@ class Order extends BaseController
         }
         //处理更改状态以及发送sms
         $order::where('id','=',$order_id)->update(['status'=>2]);
-        dump($res);
         $msg = Sms::sendSms($res,1111);
+        
         if($msg['code']!="OK"){
             throw new SmsException();
         }
