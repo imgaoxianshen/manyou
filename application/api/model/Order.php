@@ -82,6 +82,9 @@ class Order extends BaseModel
         if($order['status'] == 2){
             return false;
         }
+        if($order['unlock_time']>time()){
+            return false;
+        }
         //判断这个order_id的收件人是不是这个uid
         $user = User::field("mobile")->where("id","=",$uid)->find();
 
