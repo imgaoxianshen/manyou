@@ -89,7 +89,7 @@ class Order extends BaseController
 
     //定时任务（查找今日解封的信和明天解封的信发送短信）
     public function unlockMessage(){
-        $order = new Order();
+        $order = new OrderModel();
         $unlockList = $order::unlockList();
         foreach($unlockList as $o){
             //发送短信

@@ -97,7 +97,7 @@ class Order extends BaseModel
 
     }
 
-    public function unlockList(){
+    public static function unlockList(){
         //今日0：00的到明天0:00
         return self::where('status','=',OrderStatusEnum::PAYID)->where('unlock_time','>=',strtotime(date("Y-m-d"),time()))
         ->where('unlock_time','<',strtotime(date('Y-m-d',time()+24*60*60)))->select();
