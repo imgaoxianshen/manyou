@@ -95,5 +95,6 @@ class Order extends BaseController
             //发送短信
             $msg = Sms::sendSms($res,1111);
         }
+        return new SuccessMessage();
     }
 }
