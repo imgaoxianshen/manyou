@@ -15,6 +15,8 @@ Route::post('api/:version/order/watchorder','api/:version.Order/watchOrder');
 Route::post('api/:version/order/one','api/:version.Order/getOrderOne');
 Route::post('api/:version/order/orderget','api/:version.Order/orderGet');
 Route::post('api/:version/order/ordersend','api/:version.Order/orderSend');
+Route::post('api/:version/order/unlock','api/:version.Order/unlockMessage');
+
 Route::post('api/:version/order','api/:version.Order/placeOrder');
 
 Route::post('api/:version/pay/per_order','api/:version.Pay/getPerOrder');
