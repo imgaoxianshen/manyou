@@ -91,6 +91,7 @@ class Order extends BaseController
     public function unlockMessage(){
         $order = new OrderModel();
         $unlockList = $order::unlockList();
+        dump($unlockList);
         foreach($unlockList as $o){
             //发送短信
             $msg = Sms::sendSms($o['get_phone'],1111);
