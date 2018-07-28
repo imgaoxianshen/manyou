@@ -93,7 +93,7 @@ class Order extends BaseController
         $unlockList = $order::unlockList();
         foreach($unlockList as $o){
             //发送短信
-            $msg = Sms::sendSms($res,1111);
+            $msg = Sms::sendSms($o['get_phone'],1111);
         }
         return new SuccessMessage();
     }
