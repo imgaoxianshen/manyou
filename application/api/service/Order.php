@@ -32,7 +32,7 @@ class Order
             $order->get_phone = $oMsg['get_phone'];
             $order->unlock_time = strtotime($oMsg['date']);
             //这里还要算price
-            $order->price = 0.01;
+            $order->price = ceil(($order->unlock_time-time())/(60*60*24*365))*2;
             $order->save();
             
             $orderID = $order->id;
