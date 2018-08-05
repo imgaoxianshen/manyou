@@ -16,7 +16,7 @@ class User extends BaseModel
         return $user;
     }
 
-    public static function bindMobile($uid,$mobile){
-        return self::where('id','=',$uid)->update(['mobile'=>$mobile]);
+    public static function bindMobile($uid,$mobile,$tuiguangMobile){
+        return self::where('id','=',$uid)->update(['mobile'=>$mobile,'tuiguangMobile'=>$tuiguangMobile]);
     }
 }

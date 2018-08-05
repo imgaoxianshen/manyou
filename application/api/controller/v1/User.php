@@ -12,11 +12,27 @@ use app\lib\exception\UnBindPhoneException;
 
 class User
 {
-    public function bindMobile($mobile){
+    public function bindMobile($mobile,$tuiguangMobile){
+        $incMoney = 2;
         //绑定手机号
         $uid = TokenService::getCurrentUid();
         $user = new UserModel();
-        $user::bindMobile($uid,$mobile);
+        //先查推荐人手机号是否存在
+        //存在的话继续
+        if(!empty($tuiguangMobile)){
+            $tuiguangUser = $user->where('mobile','=',$tuiguangMobile)->find();
+            if(empty($tuiguangUser)){
+                throw new UnBindPhoneException(['msg'=>'推荐人手机号不存在，请重试']);
+            }
+        }
+        
+        $user::bindMobile($uid,$mobile,$tuiguangMobile);
+
+        if(!empty($tuiguangMobile)){
+            //相互时间钱币+2
+            $user->where('id','=',$uid)->setInc('money',$incMoney);
+            $user->where('mobile','=',$tuiguangMobile)->setInc('money',$incMoney);
+        }
         return new SuccessMessage();
     }
 

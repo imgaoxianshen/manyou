@@ -7,6 +7,7 @@ use app\api\model\Order as OrderModel;
 use app\lib\enum\OrderStatusEnum;
 use app\api\service\Sms;
 use think\Db;
+use app\lib\enum\SmsTemplate;
 
 class WxNotify extends WxPayNotify{
 
@@ -23,7 +24,7 @@ class WxNotify extends WxPayNotify{
                 Db::commit();
 
                 //这里还有发送sms
-                Sms::sendSms($order['get_phone'],12345);
+                Sms::sendSms($order['get_phone'],$order['mobile'],SmsTemplate::START_SEND);
                 return true;
 
             }catch(\Exception $e){

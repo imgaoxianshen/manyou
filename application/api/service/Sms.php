@@ -40,9 +40,9 @@ class Sms
         $domain = "dysmsapi.aliyuncs.com";
 
         // TODO 此处需要替换成开发者自己的AK (https://ak-console.aliyun.com/)
-        $accessKeyId = "LTAICtlT7MecN2jU"; // AccessKeyId
+        $accessKeyId = "LTAIkY6nela3iF36"; // AccessKeyId
 
-        $accessKeySecret = "oU5eOo1PiApw2OoaJyWApZGOJh4ucZ"; // AccessKeySecret
+        $accessKeySecret = "CnqhKUYfzHFUi0QOxCETwX1engJDjk"; // AccessKeySecret
 
         // 暂时不支持多Region
         $region = "cn-hangzhou";
@@ -69,7 +69,7 @@ class Sms
      * 发送短信
      * @return stdClass
      */
-    public static function sendSms($phone,$code) {
+    public static function sendSms($phone,$code,$template_code) {
 
         // 初始化SendSmsRequest实例用于设置发送短信的参数
         $request = new SendSmsRequest();
@@ -84,14 +84,22 @@ class Sms
         $request->setSignName("时间信使");
 
         // 必填，设置模板CODE，应严格按"模板CODE"填写, 请参考: https://dysms.console.aliyun.com/dysms.htm#/develop/template
-        $request->setTemplateCode("SMS_137689406");
+        $request->setTemplateCode($template_code);
 
         // 可选，设置模板参数, 假如模板中存在变量需要替换则为必填项
-        $request->setTemplateParam(json_encode(array(  // 短信模板中字段的值
-            "code"=>$code,
-            "product"=>"dsd"
-        ), JSON_UNESCAPED_UNICODE));
+        if($template_code == 'BIND_PHONE'){
+            $request->setTemplateParam(json_encode(array(  // 短信模板中字段的值
+                "code"=>$code
+            ), JSON_UNESCAPED_UNICODE));
+    
+        }else{
+            $request->setTemplateParam(json_encode(array(  // 短信模板中字段的值
+                "phone"=>$code
+            ), JSON_UNESCAPED_UNICODE));
+    
+        }
 
+        
         // 选填，上行短信扩展码（扩展码字段控制在7位或以下，无特殊需求用户请忽略此字段）
         $request->setSmsUpExtendCode("1234567");
 

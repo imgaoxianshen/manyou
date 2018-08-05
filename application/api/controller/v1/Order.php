@@ -10,6 +10,7 @@ use app\api\service\Order as OrderService;
 use app\api\model\Order as OrderModel;
 use app\api\service\Sms;
 use app\lib\exception\SuccessMessage;
+use app\lib\enum\SmsTemplate;
 
 class Order extends BaseController
 {
@@ -79,7 +80,7 @@ class Order extends BaseController
         }
         //处理更改状态以及发送sms
         $order::where('id','=',$order_id)->update(['status'=>2]);
-        $msg = Sms::sendSms($res,1111);
+        $msg = Sms::sendSms($res['mobile'],$res['get_phone'],SmsTemplate::WATCHED);
 
         if($msg->Code!="OK"){
             throw new SmsException();
@@ -91,10 +92,10 @@ class Order extends BaseController
     public function unlockMessage(){
         $order = new OrderModel();
         $unlockList = $order::unlockList();
-        dump($unlockList);
+        
         foreach($unlockList as $o){
             //发送短信
-            $msg = Sms::sendSms($o['get_phone'],1111);
+            $msg = Sms::sendSms($o['get_phone'],$o['mobile'],SmsTemplate::READY_TO);
         }
         return new SuccessMessage();
     }

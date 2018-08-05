@@ -93,7 +93,7 @@ class Order extends BaseModel
         }
         
         //返回发件人的mobile
-        return $order['user']['mobile'];
+        return ['mobile'=>$order['user']['mobile'],'get_phone'=>$order['get_phone']];
 
     }
 
