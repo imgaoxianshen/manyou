@@ -24,7 +24,7 @@ Route::post('api/:version/pay/per_order','api/:version.Pay/getPerOrder');
 Route::post('api/:version/pay/notify','api/:version.Pay/receiveNotify');
 
 Route::get('api/:version/TestSms/sms','api/:version.TestSms/sms');
-Route::post('api/:version/TestSms/sendcode','api/:version.TestSms/sendCode');
+Route::post('api/:version/user/sendcode','api/:version.User/sendCode');
 
 
 Route::post('api/:version/user/bindmobile','api/:version.User/bindMobile');
