@@ -2,13 +2,17 @@
 namespace app\api\controller\v1;
 
 use app\api\validate\TokenGet;
+use app\api\validate\Mobile;
 use app\api\service\UserToken;
+use app\api\service\Sms;
 use app\api\service\Token as TokenService;
 use app\api\model\User as UserModel;
 use think\facade\Cache;
 use app\lib\exception\CodeErrorException;
 use app\lib\exception\SuccessMessage;
 use app\lib\exception\UnBindPhoneException;
+use app\lib\enum\SmsTemplate;
+
 
 class User
 {
@@ -44,5 +48,14 @@ class User
             throw new UnBindPhoneException();
         }
         return new SuccessMessage(['data'=>$mobile['mobile']]);
+    }
+
+    public function sendCode($mobile){
+        (new Mobile())->goCheck();
+        //对mobile校验
+        $code = rand(1000,9999);
+        Sms::sendSms($mobile,$code,SmsTemplate::BIND_PHONE);
+        
+        return new SuccessMessage(['data'=>$code]);
     }
 }
