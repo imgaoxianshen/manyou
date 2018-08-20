@@ -29,3 +29,4 @@ Route::post('api/:version/user/sendcode','api/:version.User/sendCode');
 
 Route::post('api/:version/user/bindmobile','api/:version.User/bindMobile');
 Route::post('api/:version/user/getmobile','api/:version.User/getMobile');
+Route::post('api/:version/user/getmoney','api/:version.User/getMoney');

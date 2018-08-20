@@ -50,6 +50,14 @@ class User
         return new SuccessMessage(['data'=>$mobile['mobile']]);
     }
 
+    public function getMoney(){
+        $uid = TokenService::getCurrentUid();
+        $user = new UserModel();
+        $mobile = $user->field('money')->where('id','=',$uid)->find();
+        
+        return new SuccessMessage(['data'=>$mobile['money']]);
+    }
+
     public function sendCode($mobile){
         (new Mobile())->goCheck();
         //对mobile校验
