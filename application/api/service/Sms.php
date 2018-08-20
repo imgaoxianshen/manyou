@@ -87,7 +87,7 @@ class Sms
         $request->setTemplateCode($template_code);
 
         // 可选，设置模板参数, 假如模板中存在变量需要替换则为必填项
-        if($template_code == 'BIND_PHONE'){
+        if($template_code == 'SMS_141615835'){
             $request->setTemplateParam(json_encode(array(  // 短信模板中字段的值
                 "code"=>$code
             ), JSON_UNESCAPED_UNICODE));
