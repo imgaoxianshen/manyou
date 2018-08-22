@@ -5,6 +5,7 @@ namespace app\api\model;
 use app\lib\enum\OrderStatusEnum;
 use app\api\model\User;
 use app\lib\exception\UnBindPhoneException;
+use app\lib\exception\PayException;
 
 class Order extends BaseModel
 {
@@ -109,5 +110,32 @@ class Order extends BaseModel
         //今日0：00的到明天0:00
         return self::where('status','=',OrderStatusEnum::PAYID)->where('unlock_time','>=',strtotime(date("Y-m-d"),time()))
         ->where('unlock_time','<',strtotime(date('Y-m-d',time()+24*60*60)))->select();
+    }
+
+    public function payOrder($id,$uid){
+        $order = self::with('User')->where('id','=',$id)->find();
+        if($uid != $order['user']['id']){
+            throw new PayException([
+                'msg' => '用户信息错误'
+            ]);
+        }
+        if($user['money']>$order['user']['money']){
+            try{
+                self::startTrans();
+                self::where('id','=',$id)->update(['status' => OrderStatusEnum::PAYID]);
+                User::where('id','=',$uid)->setDec('money', $order['price']);
+                self::commit();
+            }catch(\Exception $e){
+                self::rollback();
+                throw new PayException([
+                    'msg' => '支付失败，请重试'
+                ]);
+            }
+        }else{
+            throw new PayException([
+                'msg' => '支付失败，时间币不足'
+            ]);
+        }
+        
     }
 }
