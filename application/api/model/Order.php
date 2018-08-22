@@ -119,7 +119,7 @@ class Order extends BaseModel
                 'msg' => '用户信息错误'
             ]);
         }
-        if($user['money']>$order['user']['money']){
+        if($order['user']['money']>$order['price']){
             try{
                 self::startTrans();
                 self::where('id','=',$id)->update(['status' => OrderStatusEnum::PAYID]);
