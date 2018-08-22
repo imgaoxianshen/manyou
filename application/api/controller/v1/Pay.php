@@ -7,7 +7,7 @@ use app\api\service\Pay as PayService;
 use app\api\service\WxNotify as WxNotifySercice;
 use app\lib\exception\SuccessMessage;
 use app\api\model\Order;
-use app\api\service\TokenService;
+use app\api\service\Token as TokenService;
 
 class  Pay extends BaseController{
     protected $beforeActionList = [
