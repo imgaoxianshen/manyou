@@ -23,6 +23,7 @@ class Order extends BaseController
         $oMsg['imgs'] = input('post.imgs');
         $oMsg['get_phone'] = input('post.get_phone');
         $oMsg['date'] = input('post.date');
+        $oMsg['name'] = input('post.name');
         // $oMsg['music'] = input('post.music');
         $uid = TokenService::getCurrentUid();
 
