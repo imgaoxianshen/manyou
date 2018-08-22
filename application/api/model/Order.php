@@ -121,7 +121,6 @@ class Order extends BaseModel
         }
         if($order['user']['money']>$order['price']){
             try{
-                dump($uid);
                 self::startTrans();
                 self::where('id','=',$id)->update(['status' => OrderStatusEnum::PAYID]);
                 User::where('id','=',$uid)->setDec('money', $order['price']);
