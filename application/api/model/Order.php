@@ -112,7 +112,7 @@ class Order extends BaseModel
         ->where('unlock_time','<',strtotime(date('Y-m-d',time()+24*60*60)))->select();
     }
 
-    public function payOrder($id,$uid){
+    public static function payOrder($id,$uid){
         $order = self::with('User')->where('id','=',$id)->find();
         if($uid != $order['user']['id']){
             throw new PayException([
