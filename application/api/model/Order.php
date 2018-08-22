@@ -72,7 +72,15 @@ class Order extends BaseModel
 
     //这个人发送的信
     public static function orderSend($uid){
-        return self::where('status','<>',OrderStatusEnum::UNPAIED)->where('user_id','=',$uid)->order('create_time','desc')->select();
+        $user = User::field("mobile")->where("id","=",$uid)->find();
+        //需要屏蔽发送给自己的信
+        $list = self::where('status','<>',OrderStatusEnum::UNPAIED)->where('user_id','=',$uid)->order('create_time','desc')->select(); 
+        foreach($list as $k => $l){
+            if($l['get_phone'] == $user['mobile']){
+                unset($list[$k]);
+            }
+        }
+        return $list;
     }
 
     public static function watchOrder($uid,$order_id){
