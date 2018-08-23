@@ -25,7 +25,6 @@ class WxNotify extends WxPayNotify{
             
                 //这里还有发送sms
                 $res = Sms::sendSms($order->get_phone,$order->name,SmsTemplate::START_SEND);
-                file_put_contents('a.txt',json_encode($res));    
                 return true;
 
             }catch(\Exception $e){
