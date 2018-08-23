@@ -130,6 +130,7 @@ class Order extends BaseModel
                 self::where('id','=',$id)->update(['status' => OrderStatusEnum::PAYID]);
                 User::where('id','=',$uid)->setDec('money', $order['price']);
                 self::commit();
+                return $order;
             }catch(\Exception $e){
                 self::rollback();
                 throw new PayException([

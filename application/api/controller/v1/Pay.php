@@ -24,7 +24,7 @@ class  Pay extends BaseController{
             return new SuccessMessage(['data'=>$payService->pay()]);
         }else{
             $uid = TokenService::getCurrentUid();
-            Order::payOrder($id,$uid);
+            $order = Order::payOrder($id,$uid);
             $res = Sms::sendSms($order->get_phone,$order->name,SmsTemplate::START_SEND);
             return new SuccessMessage();
         }
