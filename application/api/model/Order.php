@@ -113,7 +113,7 @@ class Order extends BaseModel
     }
 
     public static function payOrder($id,$uid){
-        $order = self::with('User')->where('id','=',$id)->where('status','<>',OrderStatusEnum::UNPAIED)->find();
+        $order = self::with('User')->where('id','=',$id)->where('status','=',OrderStatusEnum::UNPAIED)->find();
         if(empty($order)){
             throw new PayException([
                 'msg' => '此订单已经被支付或者该订单不存在'
