@@ -22,7 +22,7 @@ class WxNotify extends WxPayNotify{
                     OrderModel::where("order_no","=",$orderNo)->update(["status"=>OrderStatusEnum::PAYID]);
                 }
                 Db::commit();
-                file_put_contents('a.txt','234234');
+                file_put_contents('a.txt',$order->get_phone.PHP_EOL.$order->name);
                 //这里还有发送sms
                 Sms::sendSms($order->get_phone,$order->name,SmsTemplate::START_SEND);
                 
