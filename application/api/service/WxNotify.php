@@ -18,13 +18,13 @@ class WxNotify extends WxPayNotify{
             try{
                 $order = OrderModel::where("order_no","=",$orderNo)->lock(true)->find();
 
-                if($order->status ==OrderStatusEnum::UNPAIED){
+                if($order->status == OrderStatusEnum::UNPAIED){
                     OrderModel::where("order_no","=",$orderNo)->update(["status"=>OrderStatusEnum::PAYID]);
                 }
                 Db::commit();
 
                 //这里还有发送sms
-                Sms::sendSms($order['get_phone'],$order['mobile'],SmsTemplate::START_SEND);
+                Sms::sendSms($order->get_phone,$order->name,SmsTemplate::START_SEND);
                 return true;
 
             }catch(\Exception $e){
