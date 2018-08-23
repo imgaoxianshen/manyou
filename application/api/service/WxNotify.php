@@ -24,7 +24,7 @@ class WxNotify extends WxPayNotify{
                 Db::commit();
             
                 //这里还有发送sms
-                $res = Sms::sendSms($order->get_phone,$order->name,SmsTemplate::START_SEND);
+                $res = Sms::sendSms($order['get_phone'],$order['name'],SmsTemplate::START_SEND);
                 return true;
 
             }catch(\Exception $e){
