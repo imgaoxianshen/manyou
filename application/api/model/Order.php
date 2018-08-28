@@ -32,6 +32,9 @@ class Order extends BaseModel
         })->where('status','<>',OrderStatusEnum::UNPAIED)->order('create_time','desc')->select();
 
         foreach($orderList as &$order){
+            if($order['status'] == 1){
+                $order['left_time'] = ($order['unlock_time'] <= time()) ? -1 : floor(($order['unlock_time']-time())/(60*60*24));
+            }
             if($order['get_phone'] == $user['mobile']){
                 $order['type'] = 'get';
             }else{
