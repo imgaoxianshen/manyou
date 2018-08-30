@@ -85,15 +85,15 @@ class Order extends BaseModel
         $user = User::field("mobile")->where("id","=",$uid)->find();
         //需要屏蔽发送给自己的信
         $orderList = self::where('status','<>',OrderStatusEnum::UNPAIED)->where('user_id','=',$uid)->order('create_time','desc')->select(); 
-        foreach($orderListlist as $k => $order){
+        foreach($orderList as $k => $order){
             if($order['status'] == 1){
                 $order['left_time'] = ($order['unlock_time'] <= time()) ? -1 : floor(($order['unlock_time']-time())/(60*60*24));
             }
             if($order['get_phone'] == $user['mobile']){
-                unset($orderListlist[$k]);
+                unset($orderList[$k]);
             }
         }
-        return $orderListlist;
+        return $orderList;
     }
 
     public static function watchOrder($uid,$order_id){
