@@ -71,20 +71,29 @@ class Order extends BaseModel
             throw new UnBindPhoneException();
         }
         //这里用phone查询订单列表
-        return self::with('User')->where('status','<>',OrderStatusEnum::UNPAIED)->where('get_phone','=',$user['mobile'])->order('create_time','desc')->select(); 
+        $orderList = self::with('User')->where('status','<>',OrderStatusEnum::UNPAIED)->where('get_phone','=',$user['mobile'])->order('create_time','desc')->select(); 
+        foreach($orderList as $order){
+            if($order['status'] == 1){
+                $order['left_time'] = ($order['unlock_time'] <= time()) ? -1 : floor(($order['unlock_time']-time())/(60*60*24));
+            }
+        }
+        return $orderList;
     }
 
     //这个人发送的信
     public static function orderSend($uid){
         $user = User::field("mobile")->where("id","=",$uid)->find();
         //需要屏蔽发送给自己的信
-        $list = self::where('status','<>',OrderStatusEnum::UNPAIED)->where('user_id','=',$uid)->order('create_time','desc')->select(); 
-        foreach($list as $k => $l){
-            if($l['get_phone'] == $user['mobile']){
-                unset($list[$k]);
+        $orderList = self::where('status','<>',OrderStatusEnum::UNPAIED)->where('user_id','=',$uid)->order('create_time','desc')->select(); 
+        foreach($orderListlist as $k => $order){
+            if($order['status'] == 1){
+                $order['left_time'] = ($order['unlock_time'] <= time()) ? -1 : floor(($order['unlock_time']-time())/(60*60*24));
+            }
+            if($order['get_phone'] == $user['mobile']){
+                unset($orderListlist[$k]);
             }
         }
-        return $list;
+        return $orderListlist;
     }
 
     public static function watchOrder($uid,$order_id){
